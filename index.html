@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chúc Mừng Sinh Nhật</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css"
+    />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        position: relative;
+        overflow: hidden;
+        background-color: #f7f3e9;
+      }
+      canvas {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+      .frame {
+        width: 90%;
+        max-width: 800px;
+        background-color: floralwhite;
+        border: 10px solid #ccc; /* Thinner border with a neutral color */
+        padding: 15px;
+        box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3),
+          /* Lower right shadow */ -5px -5px 15px rgba(255, 255, 255, 0.7),
+          /* Upper left light */ inset 5px 5px 10px rgba(0, 0, 0, 0.2),
+          /* Inner lower right shadow */ inset -5px -5px 10px
+            rgba(255, 255, 255, 0.5); /* Inner upper left light */
+        display: flex;
+        flex-direction: row;
+        z-index: 1;
+        position: relative;
+        border-radius: 15px; /* Add a slight border radius for a smoother look */
+      }
+      .poster {
+        width: 50%;
+        padding-right: 15px;
+        box-sizing: border-box;
+        position: relative;
+      }
+      .swiper-container {
+        width: 100%;
+        overflow: hidden;
+      }
+      .swiper-wrapper {
+        display: flex;
+      }
+      .swiper-slide {
+        min-width: 100%;
+        box-sizing: border-box;
+      }
+      .swiper-slide img {
+        width: 100%;
+        height: auto;
+      }
+      .prev,
+      .next {
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 10px;
+        margin-top: -25px;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        cursor: pointer;
+      }
+      .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+      }
+      .prev:hover,
+      .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+      }
+      .birthday-message {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 14px;
+        color: #333;
+      }
+      .calendar-section {
+        width: 50%;
+        text-align: center;
+        padding-left: 15px;
+        box-sizing: border-box;
+        position: relative;
+      }
+      .calendar-section .title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .calendar-section .cake-icon {
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+      .calendar-section .birthday-date {
+        font-size: 16px;
+        margin-bottom: 15px;
+      }
+      .calendar {
+        margin-top: 5px;
+      }
+      .calendar .weekdays,
+      .calendar .days {
+        display: flex;
+        justify-content: space-between;
+        margin: 5px 0;
+      }
+      .calendar .weekdays div,
+      .calendar .days div {
+        width: calc(100% / 7);
+        padding: 5px;
+        box-sizing: border-box;
+      }
+      .calendar .heart-highlight {
+        color: black;
+        font-weight: bold;
+        border-radius: 10px;
+        background-color: red;
+      }
+
+      @media (max-width: 600px) {
+        body {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+          font-family: Arial, sans-serif;
+          position: relative;
+          overflow: scroll;
+          background-color: #f7f3e9;
+        }
+        .frame {
+          flex-direction: column;
+          width: 95%;
+          border: none;
+          padding: 150px 0px 10px 0px;
+          box-shadow: none;
+        }
+        .poster {
+          width: 100%;
+          padding-right: 0;
+          margin-bottom: 15px;
+        }
+        .calendar-section {
+          width: 100%;
+          padding-left: 0;
+        }
+        .birthday-message {
+          font-size: 14px;
+        }
+        .calendar-section .title {
+          font-size: 20px;
+        }
+        .calendar-section .cake-icon {
+          font-size: 18px;
+        }
+        .calendar-section .birthday-date {
+          font-size: 14px;
+        }
+        .calendar .weekdays div,
+        .calendar .days div {
+          padding: 4px;
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="loveCanvas"></canvas>
+    <div class="frame">
+      <div class="poster">
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <img src="1.jpg" alt="Poster 1" />
+            </div>
+            <div class="swiper-slide">
+              <img src="2.jpg" alt="Poster 2" />
+            </div>
+            <div class="swiper-slide">
+              <img src="3.jpg" alt="Poster 3" />
+            </div>
+            <div class="swiper-slide">
+              <img src="4.jpg" alt="Poster 4" />
+            </div>
+            <div class="swiper-slide">
+              <img src="5.jpg" alt="Poster 4" />
+            </div>
+            <div class="swiper-slide">
+              <img src="6.jpg" alt="Poster 4" />
+            </div>
+          </div>
+          <div class="prev swiper-button-prev">&#10094;</div>
+          <div class="next swiper-button-next">&#10095;</div>
+        </div>
+        <div class="birthday-message">
+          Anh chúc em sinh nhật tuổi 20 vui vẻ ❤️, tuổi mới ngày càng xinh đẹp
+          hơn, thuận lợi hơn ở con đường phía trước và đạt được những gì mà em
+          muốn, chúc em sức khoẻ, tuổi mới gòy nên là anh hong có ghẹo em nữaaa
+          và em cũng hong được xúc động nhiềuuuuu nữaaa ❤️ và hãy ở bên anh thật
+          thật là nhiều cái sinh nhật nữaaaaa. Anh hết biết chúc em cái gì rồi
+          nên làa anh chúc em tất cả trừ vất vả trừ buồn bã ❤️ happy birthday em
+          iuuuu ❤️
+        </div>
+      </div>
+      <div class="calendar-section">
+        <div class="title">Happy Birthday</div>
+        <div class="cake-icon">🎂</div>
+        <div class="birthday-date">18/11/2004</div>
+        <div class="calendar">
+          <div class="weekdays">
+            <div>MO</div>
+            <div>TU</div>
+            <div>WE</div>
+            <div>TH</div>
+            <div>FR</div>
+            <div>SA</div>
+            <div>SU</div>
+          </div>
+          <div class="days">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+          </div>
+          <div class="days">
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+            <div>11</div>
+            <div>12</div>
+            <div>13</div>
+            <div>14</div>
+          </div>
+          <div class="days">
+            <div>15</div>
+            <div>16</div>
+            <div>17</div>
+            <div class="heart-highlight">18</div>
+            <div>19</div>
+            <div>20</div>
+            <div>21</div>
+          </div>
+          <div class="days">
+            <div>22</div>
+            <div>23</div>
+            <div>24</div>
+            <div>25</div>
+            <div>26</div>
+            <div>27</div>
+            <div>28</div>
+          </div>
+          <div class="days">
+            <div>29</div>
+            <div>30</div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper(".swiper-container", {
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        loop: true,
+      });
+
+      const canvas = document.getElementById("loveCanvas");
+      const ctx = canvas.getContext("2d");
+
+      function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        createHearts();
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+
+      function drawHeart(x, y, size) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.bezierCurveTo(
+          x + size / 2,
+          y - size / 2,
+          x + size,
+          y + size / 3,
+          x,
+          y + size
+        );
+        ctx.bezierCurveTo(
+          x - size,
+          y + size / 3,
+          x - size / 2,
+          y - size / 2,
+          x,
+          y
+        );
+        ctx.closePath();
+        ctx.fillStyle = "#ff4e50";
+        ctx.fill();
+        ctx.strokeStyle = "#ff4e50";
+        ctx.stroke();
+      }
+
+      let hearts = [];
+
+      function createHearts() {
+        hearts = [];
+        for (let i = 0; i < 100; i++) {
+          let size = Math.random() * 20 + 10;
+          hearts.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: size,
+            speed: Math.random() * 2 + 1,
+          });
+        }
+      }
+
+      function updateHearts() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        for (let i = 0; i < hearts.length; i++) {
+          hearts[i].y += hearts[i].speed;
+          if (hearts[i].y > canvas.height) {
+            hearts[i].y = -hearts[i].size;
+            hearts[i].x = Math.random() * canvas.width;
+          }
+          drawHeart(hearts[i].x, hearts[i].y, hearts[i].size);
+        }
+      }
+
+      function animate() {
+        updateHearts();
+        requestAnimationFrame(animate);
+      }
+
+      resizeCanvas();
+      animate();
+    </script>
+  </body>
+</html>
